@@ -10,7 +10,8 @@
 ```json
 {
   "code": 201,
-  "data": "success create user with id <id>"
+  "data": "success create user",
+  "user_id": Integer
 }
 ```
 

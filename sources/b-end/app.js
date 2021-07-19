@@ -2,16 +2,26 @@
 const express = require("express");
 const app = express();
 
-// create variable port 10000
-const port = process.env.PORT || 10000;
+const { User } = require("./models/index");
 
-// use urlencoded parser
 app.use(express.urlencoded({ extended: false }));
-
-// use json parser
 app.use(express.json());
 
-// listen port 10000
-app.listen(port, () => {
-  console.log("App listening on port", port);
+// POST /register
+app.use("/register", (req, res) => {
+  const { username, password } = req.body;
+  User.create({ username, password })
+    .then((user) => {
+      res.status(201).json({
+        code: 201,
+        data: "success create user",
+        user_id: user.id,
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({ code: 400, msg: "Bad Request" });
+    });
 });
+
+// supaya bisa terbaca oleh test maka app harus diexport
+module.exports = app;
